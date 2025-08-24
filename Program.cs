@@ -16,16 +16,30 @@ namespace PersonalInformationForm
             Console.WriteLine("Please enter your last name:");
             string Lastname = Console.ReadLine();
             string Phonenum = phoneNumber();
-            static string phoneNumber() {
-                Console.WriteLine("Please enter your phone number:");
-                string Phonenum = Console.ReadLine();
-                if (Phonenum.Length == 11 && Phonenum.StartsWith("09")) ;
-                else
+            static string phoneNumber()
+            {
+                    Console.WriteLine("Please enter your phone number:");
+                    string Phonenum = Console.ReadLine();
+                while (Phonenum.All(char.IsDigit))
                 {
-                    Console.WriteLine("Please enter valid phone number!");
-                    phoneNumber();
+                    if (Phonenum.Length == 11 && Phonenum.StartsWith("09")) ;
+                    else if (Phonenum.Length == 10 && Phonenum.StartsWith("9"))
+                    {
+                        Phonenum = "0" + Phonenum;
+                    }
+                    else if (Phonenum.Length == 13 && Phonenum.StartsWith("+98"))
+                    {
+                        Phonenum = Phonenum.Replace("+98","0");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter valid phone number!");
+                        phoneNumber();
+                    }
+
+                    return Phonenum;
                 }
-                return Phonenum;
+                return null;
             }
             Console.WriteLine("Please enter your national code:");
             int Ncode = int.Parse(Console.ReadLine());
@@ -44,11 +58,11 @@ namespace PersonalInformationForm
                         Console.WriteLine("Please enter valid Gender!");
                 }
             }
-        Console.WriteLine("Please enter your year of birth:");
+            Console.WriteLine("Please enter your year of birth:");
             string birth = (Console.ReadLine());
             DateTime birthDate = DateTime.Parse(birth);
             int age = CalculateAge(birthDate);
-           static int CalculateAge(DateTime birthDate)
+            static int CalculateAge(DateTime birthDate)
             {
                 DateTime today = DateTime.Today;
                 int age = today.Year - birthDate.Year;
